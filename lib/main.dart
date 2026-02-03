@@ -37,50 +37,72 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // analytics.logScreen('home_page');
+    analytics.logScreen('home_page');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.blue,
-        title: Text("Journey Track", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text("Journey Track", style: TextStyle(fontWeight: FontWeight.bold)),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/images/flight_img.jpg",),
-          fit: BoxFit.fill,
-          filterQuality: FilterQuality.high)
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: .center,
-            children: [
-              InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PageTwoScreen()));
-                },
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text("Book your next trip ✈️", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+            const SizedBox(height: 12),
+
+            /// Flight Card
+            InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: () {
+                analytics.logEvent('home_flight_clicked');
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const PageTwoScreen()));
+              },
+              child: Container(
+                height: 120,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: const DecorationImage(image: AssetImage("assets/images/flight_img.jpg"), fit: BoxFit.cover),
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 8, offset: const Offset(0, 4))],
+                ),
                 child: Container(
-                  height: 180,
-                  width: 180,
-                  decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(5)),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: .center,
-                      children: [
-                        Text('Flight', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500, letterSpacing: 2)),
-                        SizedBox(width: 10,),
-                        Icon(Icons.logout)
-                      ],
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
                     ),
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: const [
+                      Text(
+                        "Flights",
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 1.2),
+                      ),
+                      Icon(Icons.arrow_forward_ios, color: Colors.white),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+
+            const SizedBox(height: 24),
+
+            const Text("More services coming soon...", style: TextStyle(color: Colors.grey)),
+
+          ],
         ),
       ),
     );

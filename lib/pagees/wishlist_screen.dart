@@ -1,21 +1,19 @@
-import 'package:event_new/pagees/paynow_screen.dart';
-import 'package:event_new/pagees/wishlist_screen.dart';
 import 'package:event_new/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 
-class PageThreeScreen extends StatefulWidget {
-  const PageThreeScreen({super.key});
+class WishListScreen extends StatefulWidget {
+  const WishListScreen({super.key});
 
   @override
-  State<PageThreeScreen> createState() => _PageThreeScreenState();
+  State<WishListScreen> createState() => _WishListScreenState();
 }
 
-class _PageThreeScreenState extends State<PageThreeScreen> {
+class _WishListScreenState extends State<WishListScreen> {
   final analytics = AnalyticsService();
-  List<bool> isWishListed = [false, false, false, false, false];
+  List<bool> isWishListed = [true];
   @override
   void initState() {
-    analytics.logScreen('flight_results_page');
+    analytics.logScreen('cart_screen');
     super.initState();
   }
 
@@ -24,26 +22,17 @@ class _PageThreeScreenState extends State<PageThreeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('page three'),
-        actions: [
-          InkWell(
-            onTap: (){
-              analytics.logEvent("add_to_cart_clicked");
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>WishListScreen()));
-            },
-              child: Icon(Icons.favorite, color: Colors.red, size: 36)),
-          SizedBox(width: 15),
-        ],
+        title: Text('CART'),
       ),
-      body: ListView.builder(
-        itemCount: 5,
+      body:
+      ListView.builder(
+        itemCount: !isWishListed[0] ? 0 : 1,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           bool isWishList = isWishListed[index];
           return InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>PayNowScreen()));
-              analytics.logEvent('Flight_result_page_clicked');
+            onTap: (){
+              analytics.logEvent('Cart_result_page_clicked');
             },
             child: Padding(
               padding: const EdgeInsets.all(5),
@@ -53,11 +42,18 @@ class _PageThreeScreenState extends State<PageThreeScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white10,
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 6, offset: const Offset(0, 3))],
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
+                    )
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -65,12 +61,19 @@ class _PageThreeScreenState extends State<PageThreeScreen> {
                           children: const [
                             Icon(Icons.flight, size: 20),
                             SizedBox(width: 6),
-                            Text("IndiGo", style: TextStyle(fontWeight: FontWeight.w600)),
+                            Text(
+                              "IndiGo",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
                           ],
                         ),
                         const Text(
                           "₹ 4,299",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
                         ),
                       ],
                     ),
@@ -142,7 +145,7 @@ class _PageThreeScreenState extends State<PageThreeScreen> {
                           children: [
                             const Text("Add To Cart"),
                             const SizedBox(width: 6),
-                            isWishList ? Icon(Icons.favorite, color: Colors.red) : SizedBox(),
+                            isWishList ? Icon(Icons.favorite,color: Colors.red) : SizedBox()
                           ],
                         ),
                       ),
@@ -154,6 +157,7 @@ class _PageThreeScreenState extends State<PageThreeScreen> {
           );
         },
       ),
+
     );
   }
 }
