@@ -1,3 +1,4 @@
+import 'package:event_new/pagees/paynow_screen.dart';
 import 'package:event_new/services/analytics_service.dart';
 import 'package:flutter/material.dart';
 
@@ -20,18 +21,15 @@ class _WishListScreenState extends State<WishListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('CART'),
-      ),
-      body:
-      ListView.builder(
+      appBar: AppBar(centerTitle: true, title: Text('CART')),
+      body: ListView.builder(
         itemCount: !isWishListed[0] ? 0 : 1,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           bool isWishList = isWishListed[index];
           return InkWell(
-            onTap: (){
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PayNowScreen()));
               analytics.logEvent('Cart_result_page_clicked');
             },
             child: Padding(
@@ -42,18 +40,11 @@ class _WishListScreenState extends State<WishListScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white10,
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 6,
-                      offset: const Offset(0, 3),
-                    )
-                  ],
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 6, offset: const Offset(0, 3))],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -61,19 +52,12 @@ class _WishListScreenState extends State<WishListScreen> {
                           children: const [
                             Icon(Icons.flight, size: 20),
                             SizedBox(width: 6),
-                            Text(
-                              "IndiGo",
-                              style: TextStyle(fontWeight: FontWeight.w600),
-                            ),
+                            Text("IndiGo", style: TextStyle(fontWeight: FontWeight.w600)),
                           ],
                         ),
                         const Text(
                           "₹ 4,299",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                          ),
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
                         ),
                       ],
                     ),
@@ -145,7 +129,7 @@ class _WishListScreenState extends State<WishListScreen> {
                           children: [
                             const Text("Add To Cart"),
                             const SizedBox(width: 6),
-                            isWishList ? Icon(Icons.favorite,color: Colors.red) : SizedBox()
+                            isWishList ? Icon(Icons.favorite, color: Colors.red) : SizedBox(),
                           ],
                         ),
                       ),
@@ -157,7 +141,6 @@ class _WishListScreenState extends State<WishListScreen> {
           );
         },
       ),
-
     );
   }
 }
