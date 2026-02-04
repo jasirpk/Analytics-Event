@@ -64,7 +64,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                     ? null
                     : () {
                   analytics.logEvent('Pay_Now_Clicked');
-                  analytics.logFlightPurchase(
+                  analytics.logFlightEvent(
                     amount: 4299.00,
                     currency: "INR",
                     airline: "IndiGo",
@@ -74,7 +74,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                     departTime: "10:30 AM",
                     arriveTime: "2:10 PM",
                   );
-
+                 analytics.logFlightPurchase();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const PaymentSuccessScreen()),

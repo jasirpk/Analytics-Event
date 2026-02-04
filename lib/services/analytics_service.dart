@@ -22,7 +22,7 @@ class AnalyticsService {
   }
 
 
-  Future<void> logFlightPurchase({
+  Future<void> logFlightEvent({
     required double amount,
     required String currency,
     required String airline,
@@ -50,5 +50,23 @@ class AnalyticsService {
 
   Future<void> logScreen(String screenName) async {
     await analytics.logScreenView(screenName: screenName);
+  }
+
+  Future<void> logFlightPurchase() async {
+    await analytics.logPurchase(
+      value: 4299.0,
+      currency: 'INR',
+      transactionId: 'TXN_${DateTime.now().millisecondsSinceEpoch}',
+      items: [
+        AnalyticsEventItem(
+          itemId: '6E-214',
+          itemName: 'IndiGo Flight DEL-DXB',
+          itemCategory: 'flight',
+          price: 4299.0,
+          quantity: 1,
+          itemBrand: 'IndiGo',
+        ),
+      ],
+    );
   }
 }
